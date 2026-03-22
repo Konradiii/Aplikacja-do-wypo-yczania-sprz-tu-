@@ -46,4 +46,8 @@ system.WypozyczSprzet(2, u1, DateTime.Now.AddDays(5));
 // to powinno NIE przejść
 system.WypozyczSprzet(4, u1, DateTime.Now.AddDays(5));
 
+Console.WriteLine("===== Zwrot niewypozyczonego sprzetu =====");
+
+system.ZwrocSprzet(10); // nie istnieje lub nie wypożyczony
+
 
