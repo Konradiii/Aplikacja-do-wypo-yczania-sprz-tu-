@@ -107,4 +107,54 @@ public class SystemWypozyczen
     }
     
     
+    public void OddajDoSerwisu(int idSprzetu, string opis)
+    {
+        var sprzet = listaSprzetu.FirstOrDefault(x => x.Id == idSprzetu);
+
+        if (sprzet == null)
+        {
+            Console.WriteLine("Nie znaleziono sprzętu!");
+            return;
+        }
+
+        if (sprzet.WSerwisie)
+        {
+            Console.WriteLine("Sprzęt już jest w serwisie!");
+            return;
+        }
+
+        if (!sprzet.CzyDostepny(DateTime.Now, DateTime.Now))
+        {
+            Console.WriteLine("Sprzęt jest wypożyczony — nie można oddać do serwisu!");
+            return;
+        }
+
+        sprzet.WSerwisie = true;
+
+        Console.WriteLine($"Sprzęt oddany do serwisu! Opis: {opis}");
+    }
+    
+    
+    public void OdbierzZSerwisu(int idSprzetu)
+    {
+        var sprzet = listaSprzetu.FirstOrDefault(x => x.Id == idSprzetu);
+
+        if (sprzet == null)
+        {
+            Console.WriteLine("Nie znaleziono sprzętu");
+            return;
+        }
+
+        if (!sprzet.WSerwisie)
+        {
+            Console.WriteLine("Sprzętu nie ma w serwisie!");
+            return;
+        }
+
+        sprzet.WSerwisie = false;
+
+        Console.WriteLine("Sprzęt odebrany z serwisu!");
+    }
+    
+    
 }
