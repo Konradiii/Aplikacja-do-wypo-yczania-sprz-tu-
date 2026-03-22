@@ -38,6 +38,12 @@ system.ZwrocSprzet(1);
 Console.WriteLine("====================== Wygenerowanie raportu ======================\n"); 
 system.GenerujRaport();
 
+Console.WriteLine("===== Test limitu studenta =====");
 
+system.WypozyczSprzet(1, u1, DateTime.Now.AddDays(5));
+system.WypozyczSprzet(2, u1, DateTime.Now.AddDays(5));
+
+// to powinno NIE przejść
+system.WypozyczSprzet(4, u1, DateTime.Now.AddDays(5));
 
 
