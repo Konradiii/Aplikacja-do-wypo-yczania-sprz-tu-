@@ -157,4 +157,64 @@ public class SystemWypozyczen
     }
     
     
+    public void WypozyczeniaUzytkownika(Uzytkownik uzytkownik)
+    {
+        Console.WriteLine($"Wypożyczenia użytkownika {uzytkownik}:");
+        foreach (var wyp in listaWypozyczen)
+        {
+            if (wyp.Wypozyczajacy.Id == uzytkownik.Id)
+            {
+                Console.WriteLine(wyp);
+            }
+        }
+    }
+    
+    public void WyswietlPrzeterminowaneWypozyczenia()
+    {
+        var przeterminowane = listaWypozyczen
+            .Where(w => w.FaktycznaDataOddania == null && w.DataDo < DateTime.Now);
+
+        Console.WriteLine("Przeterminowane wypożyczenia:\n");
+        if (!przeterminowane.Any())
+        {
+            Console.WriteLine("Brak przeterminowanych wypożyczeń.");
+            return;
+        }
+        foreach (var wyp in przeterminowane)
+        {
+            Console.WriteLine(wyp);
+        }
+    }
+    
+    
+    public void GenerujRaport()
+    {
+        int wszystkie = listaSprzetu.Count;
+
+        int wSerwisie = listaSprzetu.Count(s => s.WSerwisie);
+
+        int dostepne = listaSprzetu.Count(s => 
+            s.CzyDostepny(DateTime.Now, DateTime.Now));
+
+        int wypozyczone = wszystkie - dostepne - wSerwisie;
+
+        int aktywneWypozyczenia = listaWypozyczen.Count(w => 
+            w.FaktycznaDataOddania == null);
+
+        int przeterminowane = listaWypozyczen.Count(w => 
+            w.FaktycznaDataOddania == null && w.DataDo < DateTime.Now);
+
+        Console.WriteLine("===== RAPORT WYPOŻYCZALNI =====");
+        Console.WriteLine($"Liczba sprzętów: {wszystkie}");
+        Console.WriteLine($"Dostępne: {dostepne}");
+        Console.WriteLine($"Wypożyczone: {wypozyczone}");
+        Console.WriteLine($"W serwisie: {wSerwisie}");
+        Console.WriteLine();
+        Console.WriteLine($"Aktywne wypożyczenia: {aktywneWypozyczenia}");
+        Console.WriteLine($"Przeterminowane: {przeterminowane}");
+        Console.WriteLine("================================");
+    }
+
+    
+    
 }
